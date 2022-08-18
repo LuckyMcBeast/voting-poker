@@ -5,3 +5,34 @@
 body {
   @apply text-teal-500 bg-gray-800
 }
+
+a, Link {
+  @apply text-teal-200
+}
+
+h1 {
+  @apply text-3xl font-semibold
+}
+
+h2 {
+  @apply text-2xl font-semibold
+}
+
+h3 {
+  @apply text-xl font-semibold
+}
+
+@layer components {
+  .primaryCenteredDiv {
+    @apply h-screen w-screen grid place-content-center text-center gap-1
+  }
+  .buttonStyle {
+    @apply rounded-md w-40 bg-teal-600 text-gray-800 font-semibold
+  }
+  .inputText {
+    @apply bg-gray-700 border-0 rounded-md text-center text-teal-200
+  }
+  .tealCircle {
+    @apply bg-teal-600 rounded-full grid place-content-center h-16 w-16 text-gray-800 font-bold
+  }
+}
