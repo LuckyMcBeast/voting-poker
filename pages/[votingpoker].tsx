@@ -1,10 +1,42 @@
-import { InfinityVote, NumberVote, SkipVote } from "../components/VoteButtons";
+import { useEffect, useState } from "react";
+import { io, Socket } from "socket.io-client";
 import VotingGrid from "../components/VotingGrid";
 
-
-
+let socket : Socket
 
 const VotingPoker = () => {
+  const [socketId, setSocketId] = useState("");
+  const [test, setTest] = useState(false);
+  useEffect(() => {
+    initSocketV2();
+  }, []);
+
+  const initSocketV2 = async () => {
+    if (socketId === "") {
+      await fetch("/api/socket");
+      socket = io();
+      setSocketId(socket.id)
+    }
+
+    socket.on("connect", () => {
+      setSocketId(socket.id);
+      console.log(`Connected: ${socket.id}`);
+    });
+
+    socket.on("pass", () => {
+      console.log("PASS");
+      setTest(true);
+    });
+
+  };
+
+  const testSocket = (e: React.MouseEvent) => {
+    console.log("Emitting");
+    socket.emit("test", 'This is a test');
+  };
+  
+  
+  
   return (
     <div className="primaryCenteredDiv grid-flow-col">
       <div className="w-60 h-[75vh] flex flex-col place-content-evenly border-r border-slate-500">
@@ -23,7 +55,7 @@ const VotingPoker = () => {
           <a>url.url.com/4352345423</a>
         </div>
       </div>
-      <VotingGrid/>
+      <VotingGrid testSocket={testSocket}/>
       <div className=" w-60 h-[75vh] flex flex-col place-content-evenly border-l border-slate-500">
         <div className="h-[25vh] flex flex-col place-content-start gap-5 pl-10 text-left">
           <h3>Voting Results</h3>
