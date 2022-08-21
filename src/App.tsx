@@ -1,27 +1,24 @@
-import { Component, lazy } from 'solid-js';
-import { Home } from './components/Home';
-import { useRoutes } from '@solidjs/router';
+import { Component, lazy } from "solid-js";
+import { Home } from "./components/Home";
+import { useRoutes } from "@solidjs/router";
 
 const routes = [
   {
-    path: '/',
-    component: Home
+    path: "/",
+    component: Home,
   },
   {
-    path: '/:roomName',
-    component: lazy(() => import('./components/VotingPoker'))
+    path: "/:roomName",
+    component: lazy(() => import("./components/VotingPoker")),
   },
   {
-    path: '/join/:roomName'
-  }
-]
-
+    path: "/join/:roomName",
+  },
+];
 
 const App: Component = () => {
-  const Routes = useRoutes(routes)
-  return (
-    <Routes />
-  );
+  const Routes = useRoutes(routes);
+  return <Routes />;
 };
 
 export default App;
