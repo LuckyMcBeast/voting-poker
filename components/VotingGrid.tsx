@@ -45,26 +45,26 @@ interface SkipVoteProps {
 const NumberVote: React.FC<VotingNumberProps> = ({ number, gridProps}) => {
 
   return (
-    <div className="tealCircle" onClick={e => {gridProps.testSocket(e)}}>
+    <button className="tealCircle" onClick={e => {gridProps.testSocket(e)}}>
       <p>{number}</p>
-    </div>
+    </button>
   );
 };
 
 const InfinityVote: React.FC<InfinityVoteProps> = ({gridProps}) => {
   return (
-    <div className="tealCircle text-4xl" onClick={e => {gridProps.testSocket(e)}}>
+    <button className="tealCircle text-4xl" onClick={e => {gridProps.testSocket(e)}}>
       <p>{"\u221e"}</p>
-    </div>
+    </button>
   );
 };
 
 const SkipVote: React.FC<SkipVoteProps> = ({gridProps}) => {
   return (
-    <div className="flex place-content-center" onClick={e => {gridProps.testSocket(e)}}>
-      <div className="tealCircle">
+    <div className="flex place-content-center">
+      <button className="tealCircle" onClick={e => {gridProps.testSocket(e)}}>
         <p>SKIP</p>
-      </div>
+      </button>
     </div>
   );
 };

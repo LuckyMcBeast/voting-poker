@@ -1,21 +1,49 @@
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { delimiter } from "path";
+import React, { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import VotingGrid from "../components/VotingGrid";
 
-let socket : Socket
+
+let socketUrl: string = process.env.SOCKET_IO_SERVER || "http://localhost:3200"
+let socket: Socket 
+
+function splitName(path: string): string{
+  const splitPath : string[] = path.split('-')
+  if(splitPath.length > 0){
+    splitPath.pop()
+    return splitPath.join().slice(1)
+  }
+  return ""
+}
+
 
 const VotingPoker = () => {
   const [socketId, setSocketId] = useState("");
   const [test, setTest] = useState(false);
+  const router = useRouter()
+
+
+
   useEffect(() => {
-    initSocketV2();
+    initSocket();
   }, []);
 
-  const initSocketV2 = async () => {
+  useEffect (() => {
+    router.beforePopState(() => {
+      socket.disconnect()
+      return true
+    })
+  })
+
+  const initSocket = async () => {
     if (socketId === "") {
-      await fetch("/api/socket");
-      socket = io();
-      setSocketId(socket.id)
+      socket = io(socketUrl,
+        {
+          forceNew: true
+        })
+        console.log(router.asPath)
+        socket.emit('setName', splitName(router.asPath))
     }
 
     socket.on("connect", () => {
@@ -34,9 +62,13 @@ const VotingPoker = () => {
     console.log("Emitting");
     socket.emit("test", 'This is a test');
   };
+
+  const countNumberVote = (e: React.MouseEvent, number : number) => {
+    socket.emit('numberVote', number)
+  }
   
   
-  
+
   return (
     <div className="primaryCenteredDiv grid-flow-col">
       <div className="w-60 h-[75vh] flex flex-col place-content-evenly border-r border-slate-500">
