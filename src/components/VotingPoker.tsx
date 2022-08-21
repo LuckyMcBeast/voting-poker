@@ -4,7 +4,7 @@ import { Component, onCleanup, onMount } from "solid-js";
 import { createStore } from "solid-js/store";
 import VotingGrid from "./VotingGrid";
 
-let socketUrl: string = import.meta.env.SOCKET_IO_SERVER || "http://localhost:3200"
+let socketUrl: string = import.meta.env.VITE_SOCKET_IO_SERVER
 let socket: Socket 
 
 function splitName(path: string): string{
@@ -21,10 +21,10 @@ const VotingPoker : Component = () => {
   const [state, setState] = createStore({socketId: '', name: '', test: false});
   const location = useLocation()
 
+  console.log(socketUrl)
   onMount(() => {
     initSocket();
   })
-
 
   // useEffect (() => {
   //   router.beforePopState(() => {
