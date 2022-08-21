@@ -11,9 +11,6 @@ const routes = [
     path: "/:roomName",
     component: lazy(() => import("./components/VotingPoker")),
   },
-  {
-    path: "/join/:roomName",
-  },
 ];
 
 const App: Component = () => {
